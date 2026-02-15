@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   catalog:
     user: $userID:$groupID
@@ -19,17 +17,12 @@ services:
       # ==== CATALOG ====
       - ACTIVE_PROFILES=default,distribution
       - "JAVA_OPTS=-XX:MaxDirectMemorySize=1G -XX:MaxMetaspaceSize=240234K -XX:ReservedCodeCacheSize=240M -Xss1M -Xms512m -Xmx1040584K"
-      - SPRING_H2_CONSOLE_ENABLED=false
       - PERSISTENCE_CATALOG_URL=jdbc:postgresql://db:5432/warehouse
       - PERSISTENCE_CATALOG_USERNAME=warehouse
       - PERSISTENCE_CATALOG_PASSWORD=warehouse
       - PERSISTENCE_CATALOG_DRIVER_CLASS_NAME=org.postgresql.Driver
-      - ELASTICSEARCH_HOST=search
-      # Define OAUTH2_GOOGLE_CLIENT_ID and OAUTH2_GOOGLE_CLIENT_SECRET to enable Google OAuth plugin settings (see config/.env)
-      # - OAUTH2_GOOGLE_CLIENT_ID=
-      # - OAUTH2_GOOGLE_CLIENT_SECRET=
-      # Define OPENAI_API_KEY to enable OpenAI question answering (see config/.env)
-      # - OPENAI_API_KEY=
+      - MATATIKA_ELASTICSEARCH_ENABLED=false
+      - MANAGEMENT_HEALTH_ELASTICSEARCH_ENABLED=false
       - MATATIKA_WORKSPACES_HOME=/workspaces
       - MATATIKA_PLUGINS_HOME=/plugins,/plugins-staging,file:/local-plugins
       # HTTPS config - generate a keystore in config/certs
@@ -43,10 +36,6 @@ services:
 
       # ==== APP ====
       - REACT_APP_ENV=distribution
-      #- APP_SERVER_URI=
-      #- APP_IDENTITY_CLIENT_ID=
-      # Define APP_OAUTH_GOOGLE_CLIENT_ID to enable Google OAuth plugin settings
-      # - APP_OAUTH_GOOGLE_CLIENT_ID=
     depends_on:
       db:
         condition: service_healthy
