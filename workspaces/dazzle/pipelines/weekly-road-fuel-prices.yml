@@ -5,3 +5,6 @@ max_retries: 0
 data_components:
 - tap-govuk-weekly-road-fuel-prices
 - target-ducklake
+properties:
+  target-ducklake.data_path: /lake/dazzle
+  target-ducklake.default_target_schema: RAW_FUEL
