@@ -1,0 +1,144 @@
+{
+  "plugin_type": "extractors",
+  "name": "tap-jira",
+  "namespace": "tap_jira",
+  "variant": "meltanolabs",
+  "label": "Jira",
+  "docs": "https://www-localhost.matatika.com/data-details/tap-jira/",
+  "repo": "https://github.com/meltanolabs/tap-jira",
+  "pip_url": "git+https://github.com/meltanolabs/tap-jira.git@v0.2.0",
+  "description": "Jira is a project management tool.\n\nJira is a software tool developed by Atlassian that is used for project management, issue tracking, and bug tracking. It allows teams to plan, track, and manage tasks and projects in an agile manner, with features such as customizable workflows, scrum boards, and kanban boards. Jira also offers reporting and analytics capabilities, allowing teams to track progress and identify areas for improvement. It is widely used in software development, but can be used for any type of project management.\n### Prerequisites\n\n#### Email\nThe Email is the same credentials used to log in to Jira.\n\n#### API Token\nThe API Token is created under Account Settings -> Security -> API Tokens\nYou can configure a legacy API token or a granular access token.  When using a granular access token, depending on your selected streams, you will need the following scopes:\n\nScopes\n``` read:audit-log:jira read:avatar:jira read:board-scope:jira-software read:group:jira read:issue-security-level:jira read:issue-type-screen-scheme:jira read:jira-user read:jira-work read:license:jira read:me read:permission:jira read:project-category:jira read:project-role:jira read:project:jira read:role:jira read:screen-scheme:jira read:screen:jira read:sprint:jira-software read:status:jira read:user:jira read:webhook:jira read:workflow:jira ```\n\n#### Domain\nThe Domain is the URL of the Jira instance you are connecting to (used with legacy API Tokens).\n\n#### Cloud ID\nThe Cloud ID of your tenant.  (required for use of OAuth2.0 and granular access tokens.)\n\nUsing your email and API token, it can be obtained from https://{domain}/_edge/tenant_info\n\n``` curl --user [your email]:[your api token] https://<YOUR_TENANT>.atlassian.net/_edge/tenant_info ```\n\n#### Start Date\nThe Start Date control how much data to backfill\n\n",
+  "logo_url": "/assets/logos/extractors/jira.png",
+  "capabilities": [
+    "discover",
+    "state",
+    "catalog"
+  ],
+  "settings": [
+    {
+      "name": "email",
+      "kind": "string",
+      "label": "Email",
+      "description": "The email used to authenticate with Jira.",
+      "hidden": false,
+      "sensitive": false,
+      "required": "true",
+      "protected": false
+    },
+    {
+      "name": "api_token",
+      "kind": "string",
+      "label": "API Token",
+      "description": "The API Token used to authenticate with Jira. Account Settings -> Security -> API Tokens",
+      "hidden": false,
+      "sensitive": true,
+      "required": "true",
+      "protected": false
+    },
+    {
+      "name": "domain",
+      "kind": "string",
+      "label": "Domain",
+      "description": "The Domain for your Jira account.",
+      "placeholder": "e.g. mycompany.atlassian.net",
+      "hidden": false,
+      "sensitive": false,
+      "required": "true",
+      "protected": false
+    },
+    {
+      "name": "cloud_id",
+      "kind": "string",
+      "label": "Cloud ID",
+      "description": "The Cloud ID for your Jira account.  This is required for granular API Tokens",
+      "hidden": false,
+      "sensitive": false,
+      "required": "true",
+      "protected": false
+    },
+    {
+      "name": "start_date",
+      "kind": "date_iso8601",
+      "label": "Start Date",
+      "description": "The date from which to start retrieving data from Jira.",
+      "hidden": false,
+      "sensitive": false,
+      "required": "true",
+      "protected": false
+    },
+    {
+      "name": "page_size",
+      "kind": "integer",
+      "label": "Page Size",
+      "description": "The default page size.",
+      "hidden": true,
+      "sensitive": false,
+      "required": "false",
+      "protected": false
+    },
+    {
+      "name": "page_size.issues",
+      "kind": "integer",
+      "value": 100,
+      "label": "Page Size",
+      "description": "Page size for issues stream",
+      "hidden": true,
+      "sensitive": false,
+      "required": "false",
+      "protected": false
+    },
+    {
+      "name": "stream_options",
+      "kind": "string",
+      "label": "Stream Options",
+      "description": "Options for individual streams",
+      "hidden": true,
+      "sensitive": false,
+      "required": "false",
+      "protected": false
+    },
+    {
+      "name": "stream_options.issues",
+      "kind": "string",
+      "label": "Stream Options - Issues",
+      "description": "Options specific to the issues stream",
+      "hidden": true,
+      "sensitive": false,
+      "required": "false",
+      "protected": false
+    },
+    {
+      "name": "stream_options.issues.jql",
+      "kind": "string",
+      "label": "Stream Options - Issues JQL Filter",
+      "description": "A JQL query to filter issues",
+      "placeholder": "e.g. id != null",
+      "hidden": true,
+      "sensitive": false,
+      "required": "false",
+      "protected": false
+    },
+    {
+      "name": "stream_options.issues.fields",
+      "kind": "string",
+      "label": "Stream Options - Issues fields",
+      "description": "A comma-separated list of fields to include. All fields are included by default.",
+      "placeholder": "all",
+      "hidden": true,
+      "sensitive": false,
+      "required": "false",
+      "protected": false
+    },
+    {
+      "name": "include_audit_logs",
+      "kind": "string",
+      "label": "Include Audit Logs Stream",
+      "description": "Include the audit logs stream",
+      "placeholder": "False",
+      "hidden": true,
+      "sensitive": false,
+      "required": "false",
+      "protected": false
+    }
+  ]
+}

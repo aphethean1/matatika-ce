@@ -42,25 +42,25 @@ keywords:
 - data-lake
 - singer-target
 label: Ducklake
-logo_url: /assets/logos/loaders/ducklake.png
+logo_url: /assets/logos/loaders/duckdb.png
 maintenance_status: active
 name: target-ducklake
 namespace: ducklake
 next_steps: ''
-pip_url: target-ducklake
+pip_url: git+https://github.com/definite-app/target-ducklake@main
 quality: gold
 repo: https://github.com/definite-app/target-ducklake
 settings:
 - name: catalog_url
   label: Catalog URL
   description: URL connection string to your catalog database.
-  kind: string
-  required: true
+  value: $MELTANO_STATE_BACKEND_URI
 - name: data_path
   label: Data Path
   description: GCS, S3, or local folder path for data storage.
   kind: string
   required: true
+  placeholder: /lake/[your lake name]
 - name: storage_type
   label: Storage Type
   description: Specifies backend storage type.
@@ -105,10 +105,13 @@ settings:
   label: Meta Schema
   description: Schema for Ducklake metadata tables.
   kind: string
+  required: true
+  value: metadata
 - name: default_target_schema
   label: Default Target Schema
   description: Default schema for data writes.
   kind: string
+  required: true
 - name: target_schema_prefix
   label: Target Schema Prefix
   description: Prefix for schema names.

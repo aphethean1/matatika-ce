@@ -1,0 +1,41 @@
+{
+  "plugin_type": "extractors",
+  "name": "tap-spreadsheets-gcs",
+  "namespace": "tap_spreadsheets_anywhere",
+  "variant": "matatika",
+  "label": "Spreadsheets GCS",
+  "docs": "https://www-localhost.matatika.com/data-details/tap-spreadsheets-s3/",
+  "repo": "https://github.com/Matatika/tap-spreadsheets-anywhere",
+  "pip_url": "git+https://github.com/Matatika/tap-spreadsheets-anywhere.git@v0.4.1 google-api-core<2.28.0",
+  "executable": "tap-spreadsheets-anywhere",
+  "description": "Spreadsheets GCS is a software tool that allows users sync data from spreadsheets stored in Google Cloud Storage into their chosen targets.\n### Prerequisites\nTo obtain the Tables required setting for connecting to Spreadsheets Anywhere, you need to have access to the spreadsheet that you want to connect to. Once you have access, you can identify the name of the table or tables that you want to connect to. The table name should be entered in the appropriate field when setting up the connection to Spreadsheets Anywhere.\nThe Google Application Credentials is your credential to connect to GCS.",
+  "logo_url": "/assets/images/datasource/tap-spreadsheets-anywhere.png",
+  "capabilities": [
+    "discover",
+    "state",
+    "catalog"
+  ],
+  "settings": [
+    {
+      "name": "tables",
+      "kind": "array",
+      "label": "Tables",
+      "description": "A setting in Spreadsheets Anywhere that allows users to select which tables they want to connect to and use in their application.",
+      "hidden": false,
+      "sensitive": false,
+      "required": "true",
+      "protected": false
+    },
+    {
+      "name": "google_application_credentials",
+      "env": "GOOGLE_APPLICATION_CREDENTIALS",
+      "kind": "string",
+      "label": "Google Application Credentials",
+      "description": "JSON content or path to service account credentials.",
+      "hidden": false,
+      "sensitive": true,
+      "required": "true",
+      "protected": false
+    }
+  ]
+}

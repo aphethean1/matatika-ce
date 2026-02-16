@@ -1,0 +1,58 @@
+version: 1
+default_environment: dev
+project_id: 019c621f-ec2c-7327-82dc-aa597fd5f37b
+environments:
+- name: dev
+- name: staging
+- name: prod
+plugins:
+  extractors:
+  - name: tap-spreadsheets-gmail
+    variant: matatika
+    pip_url: git+https://github.com/Matatika/tap-spreadsheets-anywhere@v0.4.0
+  - name: tap-spreadsheets-sftp
+    variant: matatika
+    pip_url: git+https://github.com/Matatika/tap-spreadsheets-anywhere@v0.4.1 google-api-core<2.28.0
+  - name: tap-spreadsheets-s3
+    variant: matatika
+    pip_url: git+https://github.com/Matatika/tap-spreadsheets-anywhere@v0.4.1 google-api-core<2.28.0
+  - name: tap-spreadsheets-azure
+    variant: matatika
+    pip_url: git+https://github.com/Matatika/tap-spreadsheets-anywhere@v0.4.1 google-api-core<2.28.0
+  - name: tap-spreadsheets-imap
+    variant: matatika
+    pip_url: git+https://github.com/Matatika/tap-spreadsheets-anywhere@v0.4.0
+  - name: tap-spreadsheets-gcs
+    variant: matatika
+    pip_url: git+https://github.com/Matatika/tap-spreadsheets-anywhere.git@v0.4.1 google-api-core<2.28.0
+  - name: tap-spreadsheets-anywhere
+    variant: matatika
+    pip_url: git+https://github.com/Matatika/tap-spreadsheets-anywhere@v0.4.1 google-api-core<2.28.0
+  - name: tap-govuk-weekly-road-fuel-prices
+    variant: matatika
+    pip_url: git+https://github.com/Matatika/tap-spreadsheets-anywhere@v0.4.1 google-api-core<2.28.0
+  - name: tap-jira
+    variant: meltanolabs
+    pip_url: git+https://github.com/meltanolabs/tap-jira.git@v0.2.0
+  loaders:
+  - name: target-postgres
+    variant: matatika
+    pip_url: git+https://github.com/Matatika/pipelinewise-target-postgres.git@v0.2.1
+  - name: target-ducklake
+    variant: definite
+    pip_url: git+https://github.com/definite-app/target-ducklake@main
+  transformers:
+  - name: dbt
+    variant: dbt-labs
+    pip_url: dbt-core~=1.7.0 dbt-postgres~=1.7.0 dbt-snowflake~=1.7.0 dbt-bigquery~=1.7.0 certifi==2025.1.31
+  files:
+  - name: files-dbt
+    variant: matatika
+    pip_url: git+https://github.com/Matatika/files-dbt@v1.2
+  utilities:
+  - name: matatika
+    variant: matatika
+    pip_url: matatika~=1.16.0
+  - name: dbt-artifacts
+    variant: matatika
+    pip_url: git+https://github.com/Matatika/dbt-artifacts-ext.git@v0.1.0

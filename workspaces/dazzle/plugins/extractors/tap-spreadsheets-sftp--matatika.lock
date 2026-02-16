@@ -1,0 +1,47 @@
+{
+  "plugin_type": "extractors",
+  "name": "tap-spreadsheets-sftp",
+  "namespace": "tap_spreadsheets_anywhere",
+  "variant": "matatika",
+  "label": "Spreadsheets SFTP",
+  "docs": "https://www-localhost.matatika.com/data-details/tap-spreadsheets-sftp/",
+  "repo": "https://github.com/Matatika/tap-spreadsheets-anywhere",
+  "pip_url": "git+https://github.com/Matatika/tap-spreadsheets-anywhere@v0.4.1 google-api-core<2.28.0",
+  "executable": "tap-spreadsheets-anywhere",
+  "description": "Sync spreadsheets data from an SFTP server",
+  "logo_url": "/assets/images/datasource/tap-spreadsheets-anywhere.png",
+  "capabilities": [
+    "discover",
+    "state",
+    "catalog"
+  ],
+  "settings": [
+    {
+      "name": "tables",
+      "kind": "array",
+      "label": "Tables",
+      "description": "A setting in Spreadsheets Anywhere that allows users to select which tables they want to connect to and use in their application.",
+      "hidden": false,
+      "sensitive": false,
+      "required": "true",
+      "protected": false
+    },
+    {
+      "name": "ssh_private_key",
+      "kind": "string",
+      "label": "SSH private key",
+      "hidden": false,
+      "sensitive": true,
+      "encoding": "base64",
+      "protected": false
+    },
+    {
+      "name": "ssh_passphrase",
+      "kind": "string",
+      "label": "SSH passphrase",
+      "hidden": false,
+      "sensitive": true,
+      "protected": false
+    }
+  ]
+}

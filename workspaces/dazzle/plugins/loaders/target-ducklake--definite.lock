@@ -1,0 +1,280 @@
+{
+  "plugin_type": "loaders",
+  "name": "target-ducklake",
+  "namespace": "ducklake",
+  "variant": "definite",
+  "label": "Ducklake",
+  "repo": "https://github.com/definite-app/target-ducklake",
+  "pip_url": "git+https://github.com/definite-app/target-ducklake@main",
+  "executable": "target-ducklake",
+  "description": "Ducklake is a Singer target that supports multiple storage backends and catalog databases.\n\nTarget-ducklake is a Singer target for Ducklake that supports multiple storage backends (GCS, S3, local) and catalog databases (Postgres, SQLite, MySQL, DuckDB). It provides a flexible and scalable solution for data warehousing with support for various loading strategies including append, merge, and overwrite. Ducklake's architecture allows users to store data in cost-effective object storage while maintaining a catalog database for metadata and query optimization.\n### Prerequisites\nTo obtain the required settings for connecting to Ducklake:\n\n1. Catalog URL: Connection string to your catalog database (Postgres, SQLite, MySQL, or DuckDB).\n\n2. Data Path: GCS bucket path, S3 bucket path, or local folder path for data storage.\n\n3. Storage Type: Specify the backend storage type (GCS, S3, or local).\n\n4. Catalog Type: Database type for your catalog (postgres, sqlite, mysql, or duckdb).\n\n5. Credentials: For GCS or S3 storage, you'll need public_key and secret_key for authentication.\n\n6. Region: For S3 storage, specify the AWS region.",
+  "logo_url": "/assets/logos/loaders/duckdb.png",
+  "capabilities": [
+    "about",
+    "stream-maps",
+    "schema-flattening"
+  ],
+  "settings": [
+    {
+      "name": "catalog_url",
+      "kind": "string",
+      "value": "$MELTANO_STATE_BACKEND_URI",
+      "label": "Catalog URL",
+      "description": "URL connection string to your catalog database.",
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "data_path",
+      "kind": "string",
+      "label": "Data Path",
+      "description": "GCS, S3, or local folder path for data storage.",
+      "placeholder": "/lake/[your lake name]",
+      "hidden": false,
+      "sensitive": false,
+      "required": "true",
+      "protected": false
+    },
+    {
+      "name": "storage_type",
+      "kind": "options",
+      "value": "local",
+      "label": "Storage Type",
+      "description": "Specifies backend storage type.",
+      "options": [
+        {
+          "label": "Local",
+          "value": "local"
+        },
+        {
+          "label": "GCS",
+          "value": "GCS"
+        },
+        {
+          "label": "S3",
+          "value": "S3"
+        }
+      ],
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "catalog_type",
+      "kind": "options",
+      "value": "postgres",
+      "label": "Catalog Type",
+      "description": "Database type for catalog.",
+      "options": [
+        {
+          "label": "Postgres",
+          "value": "postgres"
+        },
+        {
+          "label": "SQLite",
+          "value": "sqlite"
+        },
+        {
+          "label": "MySQL",
+          "value": "mysql"
+        },
+        {
+          "label": "DuckDB",
+          "value": "duckdb"
+        }
+      ],
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "public_key",
+      "kind": "string",
+      "label": "Public Key",
+      "description": "Credentials for private GCS/S3 storage.",
+      "hidden": false,
+      "sensitive": true,
+      "protected": false
+    },
+    {
+      "name": "secret_key",
+      "kind": "string",
+      "label": "Secret Key",
+      "description": "Credentials for private GCS/S3 storage.",
+      "hidden": false,
+      "sensitive": true,
+      "protected": false
+    },
+    {
+      "name": "region",
+      "kind": "string",
+      "label": "Region",
+      "description": "AWS region for S3 operations.",
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "meta_schema",
+      "kind": "string",
+      "value": "public",
+      "label": "Meta Schema",
+      "description": "Schema for Ducklake metadata tables.",
+      "hidden": false,
+      "sensitive": false,
+      "required": true,
+      "protected": false
+    },
+    {
+      "name": "default_target_schema",
+      "kind": "string",
+      "label": "Default Target Schema",
+      "description": "Default schema for data writes.",
+      "hidden": false,
+      "sensitive": false,
+      "required": true,
+      "protected": false
+    },
+    {
+      "name": "target_schema_prefix",
+      "kind": "string",
+      "label": "Target Schema Prefix",
+      "description": "Prefix for schema names.",
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "load_method",
+      "kind": "options",
+      "value": "merge",
+      "label": "Load Method",
+      "description": "Loading strategy\u2014append, merge, or overwrite.",
+      "options": [
+        {
+          "label": "Append",
+          "value": "append"
+        },
+        {
+          "label": "Merge",
+          "value": "merge"
+        },
+        {
+          "label": "Overwrite",
+          "value": "overwrite"
+        }
+      ],
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "add_record_metadata",
+      "kind": "boolean",
+      "value": false,
+      "label": "Add Record Metadata",
+      "description": "Automatically adds Singer Data Capture metadata columns.",
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "overwrite_if_no_pk",
+      "kind": "boolean",
+      "value": false,
+      "label": "Overwrite If No Primary Key",
+      "description": "Truncates tables when primary keys are absent.",
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "max_batch_size",
+      "kind": "integer",
+      "value": 10000,
+      "label": "Max Batch Size",
+      "description": "Maximum number of records to process in a single batch.",
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "temp_file_dir",
+      "kind": "string",
+      "value": "temp_files/",
+      "label": "Temp File Directory",
+      "description": "Location for temporary parquet files.",
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "flatten_max_level",
+      "kind": "integer",
+      "value": 0,
+      "label": "Flatten Max Level",
+      "description": "Nesting depth for field flattening (0 to disable).",
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "auto_cast_timestamps",
+      "kind": "boolean",
+      "value": false,
+      "label": "Auto Cast Timestamps",
+      "description": "Converts timestamp-like fields to timestamp types.",
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "convert_tz_to_utc",
+      "kind": "boolean",
+      "value": false,
+      "label": "Convert Timezone to UTC",
+      "description": "Normalizes timezone data to UTC.",
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "validate_records",
+      "kind": "boolean",
+      "value": false,
+      "label": "Validate Records",
+      "description": "Schema validation for incoming streams.",
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "partition_fields",
+      "kind": "object",
+      "label": "Partition Fields",
+      "description": "Maps stream names to partition column definitions with type (timestamp/identifier) and granularity options.",
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "stream_maps",
+      "kind": "object",
+      "label": "Stream Maps",
+      "description": "Config object for stream maps capability. For more information check out [Stream Maps](https://sdk.meltano.com/en/latest/stream_maps.html).",
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "stream_map_config",
+      "kind": "object",
+      "label": "Stream Map Config",
+      "description": "User-defined config values to be used within map expressions.",
+      "hidden": false,
+      "sensitive": false,
+      "protected": false
+    }
+  ]
+}

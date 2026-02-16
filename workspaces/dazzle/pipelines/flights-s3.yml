@@ -1,0 +1,26 @@
+version: pipelines/v0.1
+label: Flights S3
+timeout: 0
+max_retries: 0
+data_components:
+- tap-spreadsheets-s3
+- target-ducklake
+properties:
+  tap-spreadsheets-s3.tables: |
+    [
+      {
+        "name": "flights",
+        "path": "s3://flights.dev.matatika.com",
+        "format": "csv",
+        "pattern": "^period=201101/.*$",
+        "start_date": "2009-10-01T00:00:00Z",
+        "key_properties": [
+          "_smart_source_bucket",
+          "_smart_source_file",
+          "_smart_source_lineno"
+        ]
+      }
+    ]
+  target-ducklake.data_path: /lake/dazzle
+  target-ducklake.default_target_schema: RAW_FLIGHTS
+  

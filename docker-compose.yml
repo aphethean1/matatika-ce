@@ -49,6 +49,7 @@ services:
       - certs:/certs
       - workspaces:/workspaces
       - plugins:/local-plugins
+      - lake:/lake
 
   db:
     image: postgres:11
@@ -87,6 +88,12 @@ volumes:
     driver_opts:
       type: none
       device: ${PWD}/plugins
+      o: bind
+  lake:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/lake
       o: bind
 
 networks:

@@ -1,0 +1,85 @@
+{
+  "plugin_type": "extractors",
+  "name": "tap-spreadsheets-gmail",
+  "namespace": "tap_spreadsheets_anywhere",
+  "variant": "matatika",
+  "label": "Spreadsheets Gmail",
+  "docs": "https://www-localhost.matatika.com/data-details/tap-spreadsheets-gmail/",
+  "repo": "https://github.com/Matatika/tap-spreadsheets-anywhere",
+  "pip_url": "git+https://github.com/Matatika/tap-spreadsheets-anywhere@v0.4.0",
+  "executable": "tap-spreadsheets-anywhere",
+  "description": "Sync spreadsheets data from a Gmail mailbox",
+  "logo_url": "/assets/images/datasource/tap-spreadsheets-anywhere.png",
+  "capabilities": [
+    "discover",
+    "state",
+    "catalog"
+  ],
+  "settings": [
+    {
+      "name": "tables",
+      "kind": "array",
+      "label": "Tables",
+      "description": "A setting in Spreadsheets Anywhere that allows users to select which tables they want to connect to and use in their application.",
+      "hidden": false,
+      "sensitive": false,
+      "required": "true",
+      "protected": false
+    },
+    {
+      "name": "username",
+      "kind": "string",
+      "label": "Email",
+      "description": "Mailbox email address",
+      "hidden": false,
+      "sensitive": false,
+      "required": "true",
+      "protected": false
+    },
+    {
+      "name": "oauth_credentials.authorization_url",
+      "kind": "string",
+      "value": "https://oauth2.googleapis.com/token",
+      "hidden": true,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "oauth_credentials.scope",
+      "kind": "string",
+      "value": "https://mail.google.com/",
+      "hidden": true,
+      "sensitive": false,
+      "protected": false
+    },
+    {
+      "name": "oauth_credentials.access_token",
+      "kind": "string",
+      "hidden": true,
+      "sensitive": true,
+      "protected": false
+    },
+    {
+      "name": "oauth_credentials.refresh_token",
+      "kind": "string",
+      "hidden": true,
+      "sensitive": false,
+      "required": "true",
+      "protected": false
+    },
+    {
+      "name": "oauth_credentials.refresh_proxy_url",
+      "kind": "string",
+      "hidden": true,
+      "sensitive": true,
+      "protected": false
+    },
+    {
+      "name": "oauth_credentials.refresh_proxy_url_auth",
+      "kind": "string",
+      "hidden": true,
+      "sensitive": true,
+      "protected": false
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+version: pipelines/v0.1
+label: Weekly road fuel prices
+timeout: 0
+max_retries: 0
+data_components:
+- tap-govuk-weekly-road-fuel-prices
+- target-ducklake

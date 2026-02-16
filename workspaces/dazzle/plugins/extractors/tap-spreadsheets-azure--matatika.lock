@@ -1,0 +1,41 @@
+{
+  "plugin_type": "extractors",
+  "name": "tap-spreadsheets-azure",
+  "namespace": "tap_spreadsheets_anywhere",
+  "variant": "matatika",
+  "label": "Spreadsheets Azure",
+  "docs": "https://www-localhost.matatika.com/data-details/tap-spreadsheets-azure/",
+  "repo": "https://github.com/Matatika/tap-spreadsheets-anywhere",
+  "pip_url": "git+https://github.com/Matatika/tap-spreadsheets-anywhere@v0.4.1 google-api-core<2.28.0",
+  "executable": "tap-spreadsheets-anywhere",
+  "description": "Spreadsheets Azure is a software tool that allows users sync data from spreadsheets stored in azure into their chosen targets.\n### Prerequisites\nTo obtain the Tables required setting for connecting to Spreadsheets Anywhere, you need to have access to the spreadsheet that you want to connect to. Once you have access, you can identify the name of the table or tables that you want to connect to. The table name should be entered in the appropriate field when setting up the connection to Spreadsheets Anywhere.\nThe Azure Storage Connection String is your credential to connect to azure.",
+  "logo_url": "/assets/images/datasource/tap-spreadsheets-anywhere.png",
+  "capabilities": [
+    "discover",
+    "state",
+    "catalog"
+  ],
+  "settings": [
+    {
+      "name": "tables",
+      "kind": "array",
+      "label": "Tables",
+      "description": "A setting in Spreadsheets Anywhere that allows users to select which tables they want to connect to and use in their application.",
+      "hidden": false,
+      "sensitive": false,
+      "required": "true",
+      "protected": false
+    },
+    {
+      "name": "azure_storage_connection_string",
+      "env": "AZURE_STORAGE_CONNECTION_STRING",
+      "kind": "string",
+      "label": "Azure Storage Connection String",
+      "description": "Setting to allow users to provide Azure connection config.",
+      "hidden": false,
+      "sensitive": true,
+      "required": "true",
+      "protected": false
+    }
+  ]
+}
