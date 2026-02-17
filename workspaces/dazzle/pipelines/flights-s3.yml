@@ -1,6 +1,6 @@
 version: pipelines/v0.1
 label: Flights S3
-timeout: 0
+timeout: 1200
 max_retries: 0
 data_components:
 - tap-spreadsheets-s3
