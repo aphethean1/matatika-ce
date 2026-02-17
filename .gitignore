@@ -1,5 +1,4 @@
 config/certs/*
-workspaces/*
 lake/dazzle/*
 
 !.gitkeep
