@@ -69,6 +69,71 @@ services:
       timeout: 5s
       retries: 5
 
+  dazzleduck:
+    image: dazzleduck/dazzleduck:latest
+    container_name: dazzleduck
+    ports:
+      - "8081:8081"
+      - "59307:59307"
+    working_dir: /workspace
+    volumes:
+      - dazzleduck_data:/workspace/warehouse
+      - ./scripts:/startup:ro
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        mkdir -p /workspace/warehouse/metadata/ducklake_catalog /workspace/warehouse/data/ducklake_catalog/main && \
+        exec /app/entrypoint.sh "$$@"
+    command:
+      - "--conf"
+      - "dazzleduck_server.startup_script_provider.class=io.dazzleduck.sql.flight.LocalStartupConfigProvider"
+      - "--conf"
+      - "dazzleduck_server.startup_script_provider.script_location=/startup/ducklake-init.sql"
+      - "--conf"
+      - "users.0.username=admin"
+      - "--conf"
+      - "users.0.password=admin"
+    depends_on:
+      ducklake_catalog:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8081/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  dazzleduck-frontend:
+    image: dazzleduck/dazzleduck-frontend:0.0.20
+    container_name: dazzleduck-frontend
+    ports:
+      - "5174:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8081
+    depends_on:
+      - dazzleduck
+
+  ducklake_catalog:
+    image: postgres:15
+    container_name: ducklake_catalog
+    volumes:
+      - ducklake_catalog_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ducklake_catalog
+      POSTGRES_USER: ducklake_user
+      POSTGRES_PASSWORD: ducklake_password
+    expose:
+      - "5433"
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: pg_isready -U ducklake_user -d ducklake_catalog
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   matatika-catalog_postgres:
   certs:
@@ -94,6 +159,18 @@ volumes:
     driver_opts:
       type: none
       device: ${PWD}/lake
+      o: bind
+  dazzleduck_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/dazzleduck_data
+      o: bind
+  ducklake_catalog_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/ducklake_catalog_data
       o: bind
 
 networks:

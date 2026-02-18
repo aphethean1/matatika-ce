@@ -59,3 +59,60 @@ By installing this package you agree to the terms of our [community license](htt
 
 ## Running Matatika-CE in cloud
 Checkout our guide to running Matatika CE on a VM in your cloud [here](./cloud_config#readme).
+
+## DazzleDuck Integration
+
+This project includes DazzleDuck SQL Server with DuckLake integration, providing a high-performance remote DuckDB server that supports both Arrow Flight SQL and RESTful HTTP protocols.
+
+### Starting DazzleDuck Services
+
+To start the DazzleDuck services (dazzleduck, dazzleduck-frontend, and ducklake_catalog):
+
+```bash
+docker-compose up -d dazzleduck dazzleduck-frontend ducklake_catalog
+```
+
+This will start:
+- **dazzleduck**: The DazzleDuck SQL Server (HTTP API on 8081, Flight SQL on 59307)
+- **dazzleduck-frontend**: The web UI (port 5174)
+- **ducklake_catalog**: PostgreSQL database for DuckLake catalog (port 5433)
+
+### Services
+
+- **DazzleDuck Server**: HTTP API (8081) and Flight SQL (59307)
+- **DazzleDuck Frontend**: Web UI (5174)
+- **DuckLake Catalog**: PostgreSQL database (5433)
+
+### Connecting to DazzleDuck
+
+1. Open your browser and navigate to: **http://localhost:5174**
+2. The frontend will automatically connect to the DazzleDuck backend
+3. If login is required, use:
+   - Username: `admin`
+   - Password: `admin`
+
+### Sample Query
+
+Once connected, run this sample query to test the DuckLake catalog:
+
+```sql
+SELECT * FROM ducklake_catalog.main.sample_data;
+```
+
+This will return 5 sample entries from the DuckLake catalog that were created during initialization.
+
+### DuckLake Catalog Structure
+
+The DuckLake catalog uses PostgreSQL as the metadata store, with data stored in Parquet files:
+
+- **Metadata**: Stored in PostgreSQL (`ducklake_catalog` database)
+- **Data**: Stored in Parquet files in `./dazzleduck_data/`
+- **Tables**: Registered in the catalog with full version history via snapshots
+
+### Access Points
+
+- **Frontend UI**: http://localhost:5174
+- **DazzleDuck HTTP API**: http://localhost:8081
+- **DazzleDuck Health Check**: http://localhost:8081/health
+- **Flight SQL**: grpc://localhost:59307
+- **PostgreSQL Catalog**: localhost:5433
