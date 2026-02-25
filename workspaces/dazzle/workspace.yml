@@ -3,7 +3,7 @@ name: Dazzle
 app_properties:
   WELCOME_DATASET_ALIAS: welcome
 default_data_store: Warehouse
-state_data_store: Warehouse
+state_data_store: Ducklake-Metastore
 dataset_paths:
 - analyze/datasets
 - .meltano/analyze/datasets

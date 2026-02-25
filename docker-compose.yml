@@ -39,6 +39,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      ducklake_catalog:
+        condition: service_healthy
     healthcheck:
       test: curl -fs http://localhost:8080/actuator/health | grep '^\{"status":"UP"' > /dev/null
       interval: 10s
@@ -52,7 +54,7 @@ services:
       - lake:/lake
 
   db:
-    image: postgres:11
+    image: postgres:15
     volumes:
       - matatika-catalog_postgres:/var/lib/postgresql/data
     environment:
@@ -105,16 +107,6 @@ services:
       start_period: 30s
     restart: unless-stopped
 
-  dazzleduck-frontend:
-    image: dazzleduck/dazzleduck-frontend:0.0.20
-    container_name: dazzleduck-frontend
-    ports:
-      - "5174:5173"
-    environment:
-      - VITE_API_URL=http://localhost:8081
-    depends_on:
-      - dazzleduck
-
   ducklake_catalog:
     image: postgres:15
     container_name: ducklake_catalog
@@ -125,9 +117,9 @@ services:
       POSTGRES_USER: ducklake_user
       POSTGRES_PASSWORD: ducklake_password
     expose:
-      - "5433"
+      - "5733"
     ports:
-      - "5433:5432"
+      - "5733:5432"
     healthcheck:
       test: pg_isready -U ducklake_user -d ducklake_catalog
       interval: 10s

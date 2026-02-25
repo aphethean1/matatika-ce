@@ -1,0 +1,10 @@
+version: datastores/v0.1
+name: Ducklake-Metastore
+data_plugin: loaders/target-postgres--matatika
+properties:
+  user: ducklake_user
+  password: ducklake_password
+  host: ducklake_catalog
+  port: 5432 
+  dbname: ducklake_catalog
+  default_target_schema: public
