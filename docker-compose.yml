@@ -79,7 +79,7 @@ services:
       - "59307:59307"
     working_dir: /workspace
     volumes:
-      - dazzleduck_data:/workspace/warehouse
+      - lake:/workspace/warehouse
       - ./scripts:/startup:ro
     entrypoint:
       - /bin/sh
@@ -110,8 +110,6 @@ services:
   ducklake_catalog:
     image: postgres:15
     container_name: ducklake_catalog
-    volumes:
-      - ducklake_catalog_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ducklake_catalog
       POSTGRES_USER: ducklake_user
@@ -151,18 +149,6 @@ volumes:
     driver_opts:
       type: none
       device: ${PWD}/lake
-      o: bind
-  dazzleduck_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}/dazzleduck_data
-      o: bind
-  ducklake_catalog_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}/ducklake_catalog_data
       o: bind
 
 networks:
